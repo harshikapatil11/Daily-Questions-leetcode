@@ -1,0 +1,22 @@
+#Q2. 2529. Maximum Count of Positive Integer and Negative Integer
+
+class Solution(object):
+    def maximumCount(self, nums):
+        
+        n=len(nums)
+        pos = []
+        neg = []
+        output=0
+
+        for num in nums:  
+            if num > 0:
+                pos.append(num)
+            elif num < 0:
+                neg.append(num)
+
+        output=max(len(pos),len(neg))
+        return output
+         
+        
+
+            
