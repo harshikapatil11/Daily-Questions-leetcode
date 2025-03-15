@@ -1,0 +1,24 @@
+class Solution:
+    def minZeroArray(self, nums, queries):
+        n = len(nums)
+        diff = [0] * (n + 1)  # Difference array for range updates
+        
+        def apply_query(l, r, val):
+            diff[l] -= val  # Decrease range start
+            if r + 1 < len(diff):
+                diff[r + 1] += val  # Restore outside range
+
+        for k, (l, r, val) in enumerate(queries, 1):
+            apply_query(l, r, val)
+
+            # Recalculate nums after applying queries
+            curr = nums[:]
+            total = 0
+            for i in range(n):
+                total += diff[i]
+                curr[i] += total  # Apply difference array
+
+            if all(x == 0 for x in curr):
+                return k  # Found minimum k
+        
+        return -1
