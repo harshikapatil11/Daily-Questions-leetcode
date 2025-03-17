@@ -1,0 +1,44 @@
+289. Game of Life
+
+class Solution(object):
+    def gameOfLife(self, board):
+        """
+        :type board: List[List[int]]
+        :rtype: None Do not return anything, modify board in-place instead.
+        """
+        m = len(board)
+        n = len(board[0])
+
+        for i in range(m):
+            for j in range(n):
+                live_neighbors = 0
+
+                # Check the 8 neighbors around cell (i, j)
+                for new_i, new_j in [(i-1, j), (i+1, j), (i, j-1), (i, j+1),
+                                      (i-1, j-1), (i-1, j+1), (i+1, j-1), (i+1, j+1)]:
+                    if 0 <= new_i < m and 0 <= new_j < n:
+                        live_neighbors += board[new_i][new_j] % 2  # Counting live neighbors
+
+                if board[i][j] == 1:
+                    # Underpopulation or Overpopulation: Cell dies
+                    if live_neighbors < 2 or live_neighbors > 3:
+                        board[i][j] = -1  # Mark for death
+
+                    # Survival: Cell stays alive
+                    elif live_neighbors == 2 or live_neighbors == 3:
+                        board[i][j] = 1  # Stay alive
+
+                else:
+                    # Reproduction: Dead cell becomes alive
+                    if live_neighbors == 3:
+                        board[i][j] = 2  # Mark for reproduction
+
+        # Final update to apply the new state
+        for i in range(m):
+            for j in range(n):
+                if board[i][j] == 2:
+                    board[i][j] = 1  # Cell becomes alive
+                elif board[i][j] == -1:
+                    board[i][j] = 0  # Cell dies
+
+        return
