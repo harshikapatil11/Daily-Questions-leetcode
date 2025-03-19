@@ -1,0 +1,15 @@
+219. Contains Duplicate II
+
+from collections import Counter
+
+class Solution(object):
+    def containsNearbyDuplicate(self, nums, k):
+        repeated_numbers = Counter()
+
+        for i in range(len(nums)):  
+            num = nums[i]  
+            if num in repeated_numbers and i - repeated_numbers[num] <= k:
+                return True
+            repeated_numbers[num] = i  
+
+        return False
