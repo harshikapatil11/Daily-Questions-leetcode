@@ -1,0 +1,20 @@
+49. Group Anagrams
+
+from collections import Counter
+class Solution(object):
+    def groupAnagrams(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: List[List[str]]
+        """
+        groups = defaultdict(list)
+
+        for word in strs:
+            letter_count = Counter(word)
+            sorted_letter_count = sorted(letter_count.items())
+            key = tuple(sorted_letter_count)
+
+            groups[key].append(word)
+        
+        return list(groups.values())
+        
