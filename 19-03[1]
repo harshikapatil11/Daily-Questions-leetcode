@@ -1,0 +1,28 @@
+290. Word Pattern
+
+class Solution(object):
+    def wordPattern(self, pattern, s):
+        """
+        :type pattern: str
+        :type s: str
+        :rtype: bool
+        """
+        words = s.split()  # Fixed indentation
+
+        if len(pattern) != len(words):
+            return False
+
+        char_to_word = {}
+        mapped_words = set()
+
+        for ch, word in zip(pattern, words):
+            if ch in char_to_word:
+                if char_to_word[ch] != word:
+                    return False
+            else:
+                if word in mapped_words:
+                    return False
+                char_to_word[ch] = word
+                mapped_words.add(word)
+
+        return True
