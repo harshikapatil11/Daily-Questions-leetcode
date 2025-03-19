@@ -1,0 +1,27 @@
+202. Happy Number
+
+class Solution(object):
+    def isHappy(self, n):
+        """
+        :type n: int
+        :rtype: bool
+        """
+        split_digits = []
+        seen = set() 
+        
+        while n != 1 and n not in seen:
+            seen.add(n)
+            split_digits = []
+            temp = n
+            
+            while temp > 0:
+                split_digits.append(temp % 10)
+                temp //= 10
+            
+            total = 0
+            for i in range(len(split_digits)):  
+                total += split_digits[i] ** 2  
+            
+            n = total  
+        
+        return n == 1
