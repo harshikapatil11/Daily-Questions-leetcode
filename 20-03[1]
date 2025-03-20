@@ -1,0 +1,37 @@
+68. Text Justification
+
+class Solution(object):
+    def fullJustify(self, words, maxWidth):
+        """
+        :type words: List[str]
+        :type maxWidth: int
+        :rtype: List[str]
+        """
+        result = []
+        i = 0
+        
+        while i < len(words):
+            # Determine how many words fit in the current line
+            line = []
+            line_length = 0
+            while i < len(words) and line_length + len(words[i]) + len(line) <= maxWidth:
+                line.append(words[i])
+                line_length += len(words[i])
+                i += 1
+
+            # If it's the last line or contains only one word, left-justify
+            if i == len(words) or len(line) == 1:
+                justified_line = " ".join(line).ljust(maxWidth)
+            else:
+                total_spaces = maxWidth - line_length
+                num_gaps = len(line) - 1
+                space_width, extra_spaces = divmod(total_spaces, num_gaps)
+
+                justified_line = ""
+                for j in range(num_gaps):
+                    justified_line += line[j] + " " * (space_width + (1 if j < extra_spaces else 0))
+                justified_line += line[-1]  # Add the last word (no extra spaces after)
+
+            result.append(justified_line)
+
+        return result
