@@ -1,0 +1,36 @@
+25. Reverse Nodes in k-Group
+
+
+class ListNode(object):
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+class Solution(object):
+    def reverseKGroup(self, head, k):
+        def reverseLinkedList(head, k):
+            prev, curr = None, head
+            for _ in range(k):
+                nxt = curr.next
+                curr.next = prev
+                prev = curr
+                curr = nxt
+            return prev
+
+        dummy = ListNode(0)
+        dummy.next = head
+        prev_group = dummy
+
+        while True:
+            kth = prev_group
+            for _ in range(k):
+                kth = kth.next
+                if not kth:
+                    return dummy.next
+
+            next_group = kth.next
+            curr = prev_group.next
+            kth.next = None
+            prev_group.next = reverseLinkedList(curr, k)
+            curr.next = next_group
+            prev_group = curr
