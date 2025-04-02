@@ -1,0 +1,32 @@
+173. Binary Search Tree Iterator 
+
+
+from typing import Optional
+
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+class BSTIterator:
+    def __init__(self, root: Optional[TreeNode]):
+        self.stack = []
+        self._leftmost_inorder(root)
+
+    def _leftmost_inorder(self, node):
+        """Push all leftmost nodes to the stack"""
+        while node:
+            self.stack.append(node)
+            node = node.left
+
+    def next(self) -> int:
+        """Return the next smallest number in the BST"""
+        top_node = self.stack.pop()
+        if top_node.right:
+            self._leftmost_inorder(top_node.right)  # Process the right subtree
+        return top_node.val
+
+    def hasNext(self) -> bool:
+        """Return whether there is a next smallest number"""
+        return len(self.stack) > 0
